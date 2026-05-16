@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>بيتزا حمزة — رأيك يهمنا</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --red: #CC1414;
+  --red2: #A50E0E;
+  --red3: #7A0A0A;
+  --yellow: #F5C518;
+  --yellow2: #E0B010;
+  --dark: #1A0505;
+  --white: #FFFFFF;
+  --gray: #888;
+  --light: #FFF8E7;
+}
+
+body {
+  font-family: 'Cairo', sans-serif;
+  background: #1A0505;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+/* ── HEADER ── */
+.header {
+  width: 100%;
+  background: linear-gradient(135deg, var(--red) 0%, var(--red2) 50%, var(--red3) 100%);
+  padding: 0;
+  position: relative;
+  overflow: hidden;
+}
+
+/* torn paper effect top */
+.header::before {
+  content: '';
+  position: absolute;
+  bottom: -1px;
+  left: 0; right: 0;
+  height: 28px;
+  background: #1A0505;
+  clip-path: polygon(0% 100%, 2% 30%, 5% 80%, 8% 20%, 12% 70%, 16% 15%, 20% 65%, 24% 25%, 28% 75%, 32% 10%, 36% 60%, 40% 20%, 44% 70%, 48% 15%, 52% 65%, 56% 25%, 60% 75%, 64% 10%, 68% 55%, 72% 20%, 76% 65%, 80% 15%, 84% 60%, 88% 25%, 92% 70%, 96% 20%, 100% 50%, 100% 100%);
+}
+
+/* decorative circles */
+.header::after {
+  content: '';
+  position: absolute;
+  top: -40px; right: -40px;
+  width: 160px; height: 160px;
+  border-radius: 50%;
+  background: rgba(245,197,24,.12);
+}
+
+.header-inner {
+  padding: 2rem 1.5rem 3rem;
+  text-align: center;
+  position: relative;
+}
+
+.logo-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  margin-bottom: 1rem;
+}
+
+.logo-circle {
+  width: 72px; height: 72px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--yellow), var(--yellow2));
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 4px 20px rgba(245,197,24,.4);
+  font-size: 2rem;
+  font-weight: 900;
+  color: var(--red3);
+  border: 3px solid rgba(255,255,255,.2);
+  flex-shrink: 0;
+}
+
+.logo-text { text-align: right; }
+.logo-ar {
+  font-size: 1.6rem;
+  font-weight: 900;
+  color: var(--white);
+  line-height: 1;
+  text-shadow: 2px 2px 8px rgba(0,0,0,.3);
+}
+.logo-en {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--yellow);
+  letter-spacing: .15em;
+  margin-top: 2px;
+}
+
+.header-title {
+  font-size: 1.5rem;
+  font-weight: 900;
+  color: var(--white);
+  margin-bottom: .4rem;
+  text-shadow: 1px 2px 6px rgba(0,0,0,.3);
+}
+
+.header-sub {
+  font-size: 13px;
+  color: rgba(255,255,255,.8);
+  line-height: 1.6;
+}
+
+/* yellow accent bar */
+.yellow-bar {
+  width: 60px; height: 4px;
+  background: var(--yellow);
+  border-radius: 99px;
+  margin: .75rem auto 0;
+}
+
+/* ── FORM CARD ── */
+.form-wrap {
+  width: 100%;
+  max-width: 480px;
+  padding: 1.5rem 1.25rem 3rem;
+}
+
+.form-card {
+  background: var(--white);
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 20px 60px rgba(0,0,0,.5);
+}
+
+/* star rating */
+.rating-section {
+  background: linear-gradient(135deg, var(--yellow), var(--yellow2));
+  padding: 1.5rem 1.5rem 1.25rem;
+  text-align: center;
+}
+
+.rating-label {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--red3);
+  margin-bottom: .75rem;
+}
+
+.stars {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  direction: ltr;
+}
+
+.star {
+  font-size: 2.4rem;
+  cursor: pointer;
+  color: rgba(122,10,10,.25);
+  transition: all .15s;
+  user-select: none;
+}
+.star:hover,
+.star.active { color: var(--red2); transform: scale(1.15); }
+
+.rating-text {
+  font-size: 12px;
+  color: var(--red3);
+  font-weight: 600;
+  margin-top: .5rem;
+  min-height: 18px;
+}
+
+/* form body */
+.form-body { padding: 1.5rem; }
+
+.field { margin-bottom: 1.25rem; }
+
+.field label {
+  display: block;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--red3);
+  margin-bottom: .4rem;
+}
+
+.field label span {
+  color: var(--red);
+  margin-right: 2px;
+}
+
+.field input,
+.field select,
+.field textarea {
+  width: 100%;
+  font-family: 'Cairo', sans-serif;
+  font-size: 14px;
+  color: var(--dark);
+  background: #FFF8F8;
+  border: 1.5px solid #E8C8C8;
+  border-radius: 10px;
+  padding: 11px 14px;
+  outline: none;
+  transition: border-color .2s, box-shadow .2s;
+  direction: rtl;
+}
+
+.field input:focus,
+.field select:focus,
+.field textarea:focus {
+  border-color: var(--red);
+  box-shadow: 0 0 0 3px rgba(204,20,20,.1);
+  background: #fff;
+}
+
+.field input::placeholder,
+.field textarea::placeholder { color: #bbb; }
+
+.field textarea { resize: none; min-height: 100px; }
+
+.field select { appearance: none; cursor: pointer; }
+
+/* branches */
+.branches-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.branch-btn {
+  padding: 10px 8px;
+  border: 1.5px solid #E8C8C8;
+  border-radius: 10px;
+  background: #FFF8F8;
+  font-family: 'Cairo', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  color: #666;
+  cursor: pointer;
+  text-align: center;
+  transition: all .15s;
+}
+
+.branch-btn:hover { border-color: var(--red); color: var(--red); }
+.branch-btn.selected {
+  background: var(--red);
+  border-color: var(--red);
+  color: var(--white);
+  box-shadow: 0 4px 12px rgba(204,20,20,.3);
+}
+
+/* divider */
+.form-divider {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, #E8C8C8, transparent);
+  margin: 1.25rem 0;
+}
+
+/* submit */
+.submit-btn {
+  width: 100%;
+  padding: 14px;
+  background: linear-gradient(135deg, var(--red), var(--red2));
+  color: var(--white);
+  font-family: 'Cairo', sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all .2s;
+  box-shadow: 0 6px 20px rgba(204,20,20,.35);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-top: .25rem;
+}
+
+.submit-btn:hover {
+  background: linear-gradient(135deg, var(--red2), var(--red3));
+  transform: translateY(-2px);
+  box-shadow: 0 10px 28px rgba(204,20,20,.45);
+}
+
+.submit-btn:active { transform: translateY(0); }
+
+/* ── SUCCESS ── */
+.success-screen {
+  display: none;
+  text-align: center;
+  padding: 3rem 2rem;
+}
+
+.success-icon {
+  width: 80px; height: 80px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--yellow), var(--yellow2));
+  display: flex; align-items: center; justify-content: center;
+  font-size: 2.2rem;
+  margin: 0 auto 1.25rem;
+  box-shadow: 0 8px 24px rgba(245,197,24,.4);
+}
+
+.success-title {
+  font-size: 1.3rem;
+  font-weight: 900;
+  color: var(--red3);
+  margin-bottom: .5rem;
+}
+
+.success-sub {
+  font-size: 13px;
+  color: #888;
+  line-height: 1.7;
+}
+
+/* footer */
+.page-footer {
+  font-size: 11px;
+  color: rgba(255,255,255,.3);
+  text-align: center;
+  padding: 0 1rem 2rem;
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header" style="width:100%;max-width:480px">
+  <div class="header-inner">
+    <div class="logo-wrap">
+      <div class="logo-circle">🍕</div>
+      <div class="logo-text">
+        <div class="logo-ar">بيتزا حمزة</div>
+        <div class="logo-en">PIZZA HAMZA</div>
+      </div>
+    </div>
+    <div class="header-title">رأيك يهمنا</div>
+    <div class="header-sub">ساعدنا نتحسن — شاركنا تجربتك</div>
+    <div class="yellow-bar"></div>
+  </div>
+</div>
+
+<!-- FORM -->
+<div class="form-wrap">
+  <div class="form-card">
+
+    <!-- Star Rating -->
+    <div class="rating-section">
+      <div class="rating-label">قيّم تجربتك معنا</div>
+      <div class="stars" id="stars">
+        <span class="star" data-val="1">★</span>
+        <span class="star" data-val="2">★</span>
+        <span class="star" data-val="3">★</span>
+        <span class="star" data-val="4">★</span>
+        <span class="star" data-val="5">★</span>
+      </div>
+      <div class="rating-text" id="rating-text">اختر تقييمك</div>
+    </div>
+
+    <!-- Form Body -->
+    <div class="form-body" id="form-body">
+
+      <div class="field">
+        <label>اسمك <span>*</span></label>
+        <input type="text" id="name" placeholder="مثال: أحمد محمد" required>
+      </div>
+
+      <div class="field">
+        <label>رقم تليفونك <span>*</span></label>
+        <input type="tel" id="phone" placeholder="01XXXXXXXXX" required>
+      </div>
+
+      <div class="field">
+        <label>إيميلك <span>*</span></label>
+        <input type="email" id="email" placeholder="example@email.com" required>
+      </div>
+
+      <div class="form-divider"></div>
+
+      <div class="field">
+        <label>رأيك <span>*</span></label>
+        <textarea id="review" placeholder="اكتب تجربتك معنا بحرية — رأيك بيساعدنا نتحسن..."></textarea>
+      </div>
+
+      <button class="submit-btn" onclick="submitForm()">
+        <span>أرسل رأيك</span>
+        <span>🍕</span>
+      </button>
+
+    </div>
+
+    <!-- Success Screen -->
+    <div class="success-screen" id="success">
+      <div class="success-icon">✅</div>
+      <div class="success-title">شكراً ليك!</div>
+      <div class="success-sub">
+        رأيك وصلنا وبيهمنا جداً.<br>
+        هنتواصل معاك في أقرب وقت. 🍕
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="page-footer">بيتزا حمزة — نظام الفيدباك الذكي</div>
+
+<script>
+// Star rating
+let selectedRating = 0;
+let selectedBranch = '';
+
+const ratingLabels = ['', 'ضعيف جداً 😞', 'ضعيف 😕', 'مقبول 😐', 'كويس 😊', 'ممتاز جداً 🤩'];
+
+document.querySelectorAll('.star').forEach(star => {
+  star.addEventListener('mouseover', () => {
+    const val = +star.dataset.val;
+    document.querySelectorAll('.star').forEach((s, i) => {
+      s.style.color = i < val ? '#A50E0E' : 'rgba(122,10,10,.25)';
+    });
+    document.getElementById('rating-text').textContent = ratingLabels[val];
+  });
+
+  star.addEventListener('mouseleave', () => {
+    document.querySelectorAll('.star').forEach((s, i) => {
+      s.style.color = i < selectedRating ? '#A50E0E' : 'rgba(122,10,10,.25)';
+    });
+    document.getElementById('rating-text').textContent = selectedRating ? ratingLabels[selectedRating] : 'اختر تقييمك';
+  });
+
+  star.addEventListener('click', () => {
+    selectedRating = +star.dataset.val;
+    document.querySelectorAll('.star').forEach((s, i) => {
+      s.classList.toggle('active', i < selectedRating);
+      s.style.color = i < selectedRating ? '#A50E0E' : 'rgba(122,10,10,.25)';
+    });
+    document.getElementById('rating-text').textContent = ratingLabels[selectedRating];
+  });
+});
+
+// Branch selection
+function selectBranch(btn) {
+  document.querySelectorAll('.branch-btn').forEach(b => b.classList.remove('selected'));
+  btn.classList.add('selected');
+  selectedBranch = btn.textContent.trim();
+}
+
+// Submit
+function submitForm() {
+  const name   = document.getElementById('name').value.trim();
+  const phone  = document.getElementById('phone').value.trim();
+  const email  = document.getElementById('email').value.trim();
+  const review = document.getElementById('review').value.trim();
+
+  if (!name || !phone || !email || !review || !selectedRating) {
+    alert('من فضلك اكمل كل الحقول واختار التقييم');
+    return;
+  }
+
+  // Show success
+  document.getElementById('form-body').style.display = 'none';
+  document.querySelector('.rating-section').style.display = 'none';
+  document.getElementById('success').style.display = 'block';
+
+  fetch('https://adhaamnaasser11.app.n8n.cloud/webhook/hamza-feedback', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ name, phone, email, review, rating: selectedRating })
+  });
+
+  console.log({ name, phone, email, branch: selectedBranch, review, rating: selectedRating });
+}
+</script>
+</body>
+</html>

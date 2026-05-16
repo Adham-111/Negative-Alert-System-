@@ -1,0 +1,399 @@
+{
+  "name": "Hamza Negative Alerts",
+  "nodes": [
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "==You are a bilingual sentiment analysis expert (Arabic/Egyptian Dialect & English).\n\nوظيفتك تحليل مشاعر النص وفهمه سواء كان مكتوباً بالعامية المصرية، بالإنجليزية، أو بمزيج منهما (Mixed Language).\nوظيفتك هي تحليل تقييمات العملاء بدقة فائقة، وفهم المصطلحات الخاصة بالبيتزا والكريبات بالعامية المصرية والإنجليزية.\nRespond with ONLY one word from these three:\n- positive (في حالة الرضا، المدح، أو الشكر مثل: \"عاش\"، \"perfect\", \"very good service\", \"خدمة ممتازة\")\n- negative (في حالة الاستياء، الشكوى، أو الذم مثل: \"زي الزفت\", \"bad experience\", \"slow app\", \"وحش جداً\")\ni want the output to be positve or negative or neutral\nStrict Rules for Egyptian Dialect: \nمش دي بس يعني الاسبااب  \n1. \"بس\" (But): إذا وجدت كلمة \"بس\" وبعدها سلبية، صنف النص فوراً كـ negative.\n2. الشكوى من الوقت: أي ذكر للتأخير (اتأخر، بطيء، بقالي ساعة مستني) يعتبر negative فوراً.\n[Strict Negative Keywords for Pizza]:\n- العجينة: (معجنة، نية، ناشفة، زي الحجر، رقيقة زيادة، سميكة زيادة).\n- الطعم: (ملح كتير، حادقة، مالحة، دلعة، ملهاش طعم، محروقة).\n- المكونات: (الجبنة قليلة، مش بتمط، الحشو ناقص، الزيت كتير).\n\nGuidelines:\n1. Understand Egyptian slang: (e.g., \"جامد\" = positive, \"ضايع\" = negative).\n2. Understand English technical terms: (e.g., \"Quality\", \"Support\", \"Delivery\").\n3. Handle Mixed text: (e.g., \"الـ Order اتأخر جداً\" = negative).\n\nDo not explain. Do not add punctuation. Just reply with one word only.\n\nText to analyze:\n{{ $('Webhook').item.json.body.review }}",
+        "batching": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.9,
+      "position": [
+        -512,
+        -864
+      ],
+      "id": "bac7446a-b621-4c9e-af6b-10a02c7c70d2",
+      "name": "Basic LLM Chain"
+    },
+    {
+      "parameters": {
+        "model": "llama-3.3-70b-versatile",
+        "options": {
+          "temperature": 0
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGroq",
+      "typeVersion": 1,
+      "position": [
+        -512,
+        -496
+      ],
+      "id": "49531a42-7c92-4aad-9f8d-65c9d8f7e4c1",
+      "name": "Groq Chat Model",
+      "credentials": {
+        "groqApi": {
+          "id": "0zGLIEYIjhLBlLgy",
+          "name": "Groq account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1XwT0-3vzt31K9JtcAwOkAaKrgUXjT5EWjdncZXI4tp8",
+          "mode": "list",
+          "cachedResultName": "Hamza Feedback ",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1XwT0-3vzt31K9JtcAwOkAaKrgUXjT5EWjdncZXI4tp8/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "الورقة1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1XwT0-3vzt31K9JtcAwOkAaKrgUXjT5EWjdncZXI4tp8/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Name ": "={{ $('Webhook').item.json.body.name }}",
+            "Rate ": "={{ $json.text }}",
+            "Phone": "={{ $('Webhook').item.json.body.phone }}",
+            "Date ": "={{ $('Code in JavaScript').item.json.submissionDate }}",
+            "review ": "={{ $('Code in JavaScript').item.json.body.review }}",
+            "status": "قيد الانتظار ⏳"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "Name ",
+              "displayName": "Name ",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "review ",
+              "displayName": "review ",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Rate ",
+              "displayName": "Rate ",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Phone",
+              "displayName": "Phone",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Date ",
+              "displayName": "Date ",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "status",
+              "displayName": "status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        -16,
+        -576
+      ],
+      "id": "3ba7fb62-bf3a-412b-ab5a-5eb57f748af2",
+      "name": "Append row in sheet",
+      "retryOnFail": true,
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "WcJa5Doq7hV7v9nC",
+          "name": "Google Sheets OAuth2 API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "75e62cf8-cde6-4461-b1f4-12fdef5d8b50",
+              "leftValue": "={{ $json.text }}",
+              "rightValue": "negative",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        -112,
+        -880
+      ],
+      "id": "5b510fdc-df04-4eca-b922-2b587e5fb745",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $('Webhook').item.json.body.email }}",
+        "subject": "Feedback ",
+        "message": "=<div dir=\"rtl\" style=\"text-align: right; font-family: Arial, sans-serif; line-height: 1.6;\">\n  <h2 style=\"color: #ffc107; margin-bottom: 20px;\">\n    أهلاً يا {{ $('Webhook').item.json.body.name }}  ❤️🍕،\n  </h2>\n  \n  <p>كلامك فرحنا جداً ونور يومنا 😍</p>\n  \n  <p>إحنا في <b>بيتزا حمزة</b> بنشتغل بكل حب عشان نوصلك أحسن طعم وجودة، ورسالتك دي هي أكبر مكافأة لينا وللفريق كله في الفرع  <b></b>.</p>\n  \n  <p>يسعدنا جداً إننا نكون دايماً اختيارك الأول للبيتزا والكريب اللي \"على أصولهم\".</p>\n  \n  <div style=\"text-align: center; margin: 30px 0; padding: 20px; border: 2px dashed #ffc107; border-radius: 10px;\">\n    <p style=\"font-size: 18px; color: #d32f2f; margin: 0;\"><b>نورتنا دايماً يا بطل، ومستنيين زيارتك الجاية! 🍕✨</b></p>\n  </div>\n\n  <hr style=\"border: 0; border-top: 1px solid #eee; margin: 20px 0;\">\n  <p style=\"color: #555;\">عيلة مطعم حمزة</p>\n</div>",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        304,
+        -640
+      ],
+      "id": "7a1c5a9f-e5e7-4777-a62d-6053127e113c",
+      "name": "Send a message",
+      "webhookId": "63846a79-ae46-4045-95e6-abbb68b4372b",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "nHLsxNQYG1gxv0OU",
+          "name": "Gmail OAuth2 API"
+        }
+      },
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $('Webhook').item.json.body.email }}",
+        "subject": "=عتذار ",
+        "message": "=<div dir=\"rtl\" style=\"text-align: right; font-family: Arial, sans-serif; line-height: 1.6;\">\n <h2 style=\"color: #d32f2f; margin-bottom: 20px;\">\n  أهلاً يا {{ $('Webhook').item.json.body.name }} ، \n</h2>\n  <p>في <b>بيتزا حمزة</b>، هدفنا دايماً إننا نقدم لك أحسن طعم، وعشان كدة زعلنا جداً لما عرفنا إن تجربتك الأخيرة مكنتش مرضية.</p>\n  \n  <p style=\"background-color: #f8f8f8; padding: 10px; border-right: 5px solid #d32f2f;\">\n    <b>بخصوص شكوتك:</b><br>\n   {{ $('Webhook').item.json.body.review }}\n  </p>\n\n  <p>. الشكوى وصلت حالياً لمدير الفرع <b></b> وجاري التحقيق فيها فوراً</p>\n  <p>فريق خدمة العملاء هيتواصل معاك قريب جداً على رقمك </p>\n  \n  <hr style=\"border: 0; border-top: 1px solid #eee;\">\n  <p style=\"color: #555;\">🍕 مع تحيات إدارة مطعم حمزة </p>\n</div>",
+        "options": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        304,
+        -1056
+      ],
+      "id": "9f2c912a-cbf8-4733-8af7-0e02cd1751d7",
+      "name": "Send a message1",
+      "webhookId": "63846a79-ae46-4045-95e6-abbb68b4372b",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "nHLsxNQYG1gxv0OU",
+          "name": "Gmail OAuth2 API"
+        }
+      },
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "jsCode": "const items = $input.all();\nconst updatedItems = items.map((item) => {\n  const now = new Date();\n  \n  // استخراج اليوم والشهر والسنة مع إضافة صفر جهة اليسار للأرقام الفردية\n  const day = String(now.getDate()).padStart(2, '0');\n  const month = String(now.getMonth() + 1).padStart(2, '0'); // الأشهر تبدأ من 0 في JS\n  const year = now.getFullYear();\n\n  // تنسيق التاريخ بالصيغة المطلوبة\n  item.json.submissionDate = `${day}-${month}-${year}`;\n  \n  return item;\n});\n\nreturn updatedItems;\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -704,
+        -896
+      ],
+      "id": "43970207-031a-4499-944d-9a63bc752c66",
+      "name": "Code in JavaScript"
+    },
+    {
+      "parameters": {
+        "chatId": "934539863",
+        "text": "=🚨 **بلاغ سلبي جديد يحتاج تدخل!**\n\n👤 **العميل:** {{ $('Webhook').item.json.body.name }}\n📅 **التاريخ:** {{ $('Code in JavaScript').item.json.submissionDate }}\n\n💬 **الشكوى:** {{ $('Webhook').item.json.body.review }}\n\n📞 **رقم الهاتف:**{{ $('Webhook').item.json.body.phone }}\n⚠️ يرجى اتخاذ إجراء سريع لإرضاء العميل.",
+        "replyMarkup": "inlineKeyboard",
+        "inlineKeyboard": {
+          "rows": [
+            {
+              "row": {
+                "buttons": [
+                  {
+                    "text": "✅ تم التواصل",
+                    "additionalFields": {
+                      "callback_data": "Status Done"
+                    }
+                  },
+                  {
+                    "text": "🎁 تعويض العميل ",
+                    "additionalFields": {
+                      "callback_data": "status_gift"
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "additionalFields": {
+          "appendAttribution": false,
+          "parse_mode": "Markdown"
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        288,
+        -880
+      ],
+      "id": "20f77d33-635b-4398-be15-4ba15a963a98",
+      "name": "Negative Alert",
+      "webhookId": "e4e48961-1815-4360-bb8e-fc322ca0c9a5",
+      "credentials": {
+        "telegramApi": {
+          "id": "YTZTiL51BhU1vuv9",
+          "name": "feedback"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "hamza-feedback",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        -1040,
+        -912
+      ],
+      "id": "9b7a532e-1c5e-4c85-91eb-45b9fb6b6fde",
+      "name": "Webhook",
+      "webhookId": "d02203da-6131-4eec-9338-34280bdfc3b3"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Groq Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Basic LLM Chain",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Basic LLM Chain": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Append row in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Negative Alert",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Send a message1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Send a message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript": {
+      "main": [
+        [
+          {
+            "node": "Basic LLM Chain",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send a message1": {
+      "main": [
+        []
+      ]
+    },
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "6a83eea3-8479-445b-9bfb-a79e16ca9730",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "d055e66cb237eb4cc0c9e7d0c17776554d11e4bcbe843f6dd308e9e31701bf0f"
+  },
+  "id": "IQkr8sAmxDyQqVsQ",
+  "tags": []
+}
